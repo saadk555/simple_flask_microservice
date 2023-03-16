@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  names_detector:
+    build: ./names_detector
+    ports: 
+    - "5000:5000" 
+    networks:
+      - net-main
+
+  names_detector_2:
+    build: ./names_detector_2
+    ports:
+    - "3000:3000"
+    networks:
+      - net-main  
+
+  db:
+    image: mysql:5.7
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=names
+      - MYSQL_ROOT_PASSWORD=pandapanda
+    ports:
+      - '3306:3306'
+    volumes:
+      - database:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net-main  
+
+
+
+networks:
+  net-main:
+    driver: bridge
+
+volumes:
+  database:
+    driver: local
