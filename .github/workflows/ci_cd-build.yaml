@@ -3,11 +3,11 @@ name: Building and Deploying to IBM cloud kubernetes
 on:
   push:
     branches:
-      - main
+      - master
 
   pull_request:
     branches:
-      - main
+      - master
 
       
 # Environment variables for all jobs and steps
