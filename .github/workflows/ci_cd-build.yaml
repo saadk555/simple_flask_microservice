@@ -35,6 +35,7 @@ jobs:
         ibmcloud plugin install -f container-registry
 
     - name: Authentication with IBM Cloud
+      continue-on-error: true
       run: |
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g default
         ibmcloud cr region-set "${IBM_CLOUD_REGION}"
