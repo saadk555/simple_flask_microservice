@@ -43,7 +43,7 @@ jobs:
 
     - name: Docker build and push
       run: |
-         docker-compose up
+         docker-compose build
          docker push icr.io/$ICR_NAMESPACE/names_detector
          docker push icr.io/$ICR_NAMESPACE/names_detector_2
 

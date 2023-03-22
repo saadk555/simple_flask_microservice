@@ -18,6 +18,23 @@ services:
     networks:
       - net-main  
 
+  db:
+    image: mysql:5.7
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=names
+      - MYSQL_ROOT_PASSWORD=pandapanda
+    ports:
+      - '3306:3306'
+    volumes:
+      - database:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net-main  
+
+
 
 networks:
   net-main:
