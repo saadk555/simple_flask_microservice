@@ -38,12 +38,12 @@ jobs:
       continue-on-error: true
       run: |
         ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g default
-        ibmcloud cr region-set "${IBM_CLOUD_REGION}"
-        ibmcloud cr login
 
     - name: Docker build and push
       run: |
          docker-compose build
+         ibmcloud cr region-set "${IBM_CLOUD_REGION}"
+         ibmcloud cr login
          docker push icr.io/$ICR_NAMESPACE/names_detector
          docker push icr.io/$ICR_NAMESPACE/names_detector_2
 
