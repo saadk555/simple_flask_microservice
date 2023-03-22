@@ -1,0 +1,56 @@
+name: Building and Deploying to IBM cloud kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+      
+# Environment variables for all jobs and steps
+env:
+  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
+  IBM_CLOUD_REGION: global
+  ICR_NAMESPACE: ${{ secrets.ICR_NAMESPACE }}
+  IKS_CLUSTER: cg4ve3hf06pqhslaqr4g
+
+jobs:
+  continous-intergration-deployment:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+
+    - name: Installing and configuring IBM Cloud CLI
+      run: |
+        curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+        ibmcloud --version
+        ibmcloud config --check-version=false
+        ibmcloud plugin install -f kubernetes-service
+        ibmcloud plugin install -f container-registry
+
+    - name: Authentication with IBM Cloud
+      run: |
+        ibmcloud login --apikey "${IBM_CLOUD_API_KEY}" -r "${IBM_CLOUD_REGION}" -g default
+        ibmcloud cr region-set "${IBM_CLOUD_REGION}"
+        ibmcloud cr login
+
+    - name: Docker build and push
+      run: |
+         docker-compose up
+         docker push icr.io/$ICR_NAMESPACE/names_detector
+         docker push icr.io/$ICR_NAMESPACE/names_detector_2
+
+    - name: Deploying to kubernetes
+      run: |
+        ibmcloud ks cluster config --cluster $IKS_CLUSTER
+        kubectl config current-context
+        kubectl apply -f kubernetes
+        kubectl get deployment
+        kubectl get service
+
