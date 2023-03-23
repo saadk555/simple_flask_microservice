@@ -4,7 +4,7 @@ services:
 
   names_detector:
     build: ./names_detector
-    image: icr.io/${ICR_NAMESPACE}/names_detector
+    image: icr.io/${ICR_NAMESPACE}/names_detector:${GITHUB_SHA}
     ports: 
     - "5000:5000" 
     networks:
@@ -12,7 +12,7 @@ services:
 
   names_detector_2:
     build: ./names_detector_2
-    image: icr.io/${ICR_NAMESPACE}/names_detector_2
+    image: icr.io/${ICR_NAMESPACE}/names_detector_2:${GITHUB_SHA}
     ports:
     - "3000:3000"
     networks:
