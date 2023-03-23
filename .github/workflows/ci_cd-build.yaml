@@ -45,8 +45,8 @@ jobs:
          docker-compose build
          ibmcloud cr region-set "${IBM_CLOUD_REGION}"
          ibmcloud cr login
-         docker push icr.io/$ICR_NAMESPACE/names_detector
-         docker push icr.io/$ICR_NAMESPACE/names_detector_2
+         docker push icr.io/$ICR_NAMESPACE/names_detector:$GITHUB_SHA
+         docker push icr.io/$ICR_NAMESPACE/names_detector_2:$GITHUB_SHA
 
     - name: Deploying to kubernetes
       run: |
