@@ -34,6 +34,8 @@ jobs:
       run: |
         sed -i "s|SHORT_SHA|${SHORT_SHA}|g" kubernetes/names-detector-deployment.yaml
         sed -i "s|SHORT_SHA|${SHORT_SHA}|g" kubernetes/names-detector-2-deployment.yaml
+        sed -i "s|ICR_NAMESPACE|${ICR_NAMESPACE}|g" kubernetes/names-detector-deployment.yaml
+        sed -i "s|ICR_NAMESPACE|${ICR_NAMESPACE}|g" kubernetes/names-detector-2-deployment.yaml
     
 
     - name: Installing and configuring IBM Cloud CLI
