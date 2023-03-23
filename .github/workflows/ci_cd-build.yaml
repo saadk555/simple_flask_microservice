@@ -26,6 +26,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: SHORT_SHA from git_sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
     - name: Installing and configuring IBM Cloud CLI
       run: |
@@ -45,8 +47,8 @@ jobs:
          docker-compose build
          ibmcloud cr region-set "${IBM_CLOUD_REGION}"
          ibmcloud cr login
-         docker push icr.io/$ICR_NAMESPACE/names_detector:$GITHUB_SHA
-         docker push icr.io/$ICR_NAMESPACE/names_detector_2:$GITHUB_SHA
+         docker push icr.io/$ICR_NAMESPACE/names_detector:$SHORT_SHA
+         docker push icr.io/$ICR_NAMESPACE/names_detector_2:$SHORT_SHA
 
     - name: Deploying to kubernetes
       run: |
