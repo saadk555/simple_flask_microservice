@@ -25,7 +25,7 @@ spec:
         io.kompose.service: names-detector
     spec:
       containers:
-        - image: icr.io/week1-saad/names_detector:$SHORT_SHA
+        - image: icr.io/week1-saad/names_detector:SHORT_SHA
           name: names-detector
           ports:
             - containerPort: 5000
