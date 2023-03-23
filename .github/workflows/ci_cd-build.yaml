@@ -29,9 +29,9 @@ jobs:
     - name: SHORT_SHA from git_sha
       run: |
         echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-        sed "s|SHORT_SHA|${SHORT_SHA}|g"  kubernetes/names-detector-deployment.yaml
-        cat kubernetes/names-detector-2-deployment.yaml
-        cat kubernetes/names-detector-deployment.yaml
+        sed "s|SHORT_SHA|${GITHUB_SHA}|g" kubernetes/names-detector-deployment.yaml
+        sed "s/SHORT_SHA/$GITHUB_SHA/g" kubernetes/names-detector-deployment.yaml
+    
 
 
     - name: Installing and configuring IBM Cloud CLI
