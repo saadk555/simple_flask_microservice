@@ -27,7 +27,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: SHORT_SHA from git_sha
-      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      run: |
+        echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+        apt-get install gettext-base
+        envsubst < kubernetes\names-detector-deployment.yaml
+        envsubst < kubernetes\names-detector-2-deployment.yaml
+
 
     - name: Installing and configuring IBM Cloud CLI
       run: |
