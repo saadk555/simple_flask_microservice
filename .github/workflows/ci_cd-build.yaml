@@ -32,6 +32,8 @@ jobs:
         sudo apt-get install gettext-base
         envsubst < kubernetes/names-detector-deployment.yaml
         envsubst < kubernetes/names-detector-2-deployment.yaml
+        cat kubernetes/names-detector-2-deployment.yaml
+        cat kubernetes/names-detector-deployment.yaml
 
 
     - name: Installing and configuring IBM Cloud CLI
