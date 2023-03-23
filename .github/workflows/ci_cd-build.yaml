@@ -29,7 +29,7 @@ jobs:
     - name: SHORT_SHA from git_sha
       run: |
         echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-        find . -name "*" -exec sed -i 's/SHORT_SHA/${SHORT_SHA}/g' kubernetes/names-detector-deployment.yaml
+        sed "s|SHORT_SHA|${SHORT_SHA}|g"  kubernetes/names-detector-deployment.yaml
         cat kubernetes/names-detector-2-deployment.yaml
         cat kubernetes/names-detector-deployment.yaml
 
